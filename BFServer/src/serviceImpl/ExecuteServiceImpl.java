@@ -8,6 +8,7 @@ import service.ExecuteService;
 
 public class ExecuteServiceImpl implements ExecuteService {
 
+	
 	/**
 	 * 
 	 * 报数组越界错
@@ -54,7 +55,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 						
 					}
 				catch(IndexOutOfBoundsException e){
-					s = "IndexOutOfBoundsExceptionAt'-': "+ptr;
+					s = "IndexOutOfBoundsExceptionAt'+': "+ptr;
 					return s;
 
 				}
@@ -85,7 +86,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 						list[ptr] = param.charAt(input_ptr);
 						++input_ptr;
 					}catch(IndexOutOfBoundsException e){
-						s = "IndexOutOfBoundsExceptionAt'-': "+ptr;
+						s = "IndexOutOfBoundsExceptionAt',': "+ptr;
 						return s;
 
 					}
