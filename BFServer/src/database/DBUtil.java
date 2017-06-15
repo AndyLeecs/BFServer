@@ -3,6 +3,7 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**  
 * 类说明   
@@ -40,5 +41,12 @@ public class DBUtil
 	//对外提供一个方法获取数据库连接
 	public static Connection getConnection(){
 		return conn;
+	}
+	
+	public static void main(String args[]) throws SQLException{
+		//通过数据库的连接操作数据库，实现增删改查
+		Statement stmt = conn.createStatement();
+		
+		
 	}
 }
