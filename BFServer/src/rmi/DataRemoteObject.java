@@ -33,7 +33,7 @@ public class DataRemoteObject extends UnicastRemoteObject implements IOService, 
 	}
 
 	@Override
-	public boolean writeFile(String file, String userId, String fileName, Language l) throws RemoteException{
+	public String[] writeFile(String file, String userId, String fileName, Language l) throws RemoteException{
 		// TODO Auto-generated method stub
 		return iOService.writeFile(file, userId, fileName, l);
 	}
@@ -74,6 +74,13 @@ public class DataRemoteObject extends UnicastRemoteObject implements IOService, 
 	{
 		// TODO Auto-generated method stub
 		return executeService.execute(code, param);
+	}
+
+	@Override
+	public boolean register(String username, String password) throws RemoteException
+	{
+		// TODO Auto-generated method stub
+		return userService.register(username,password);
 	}
 
 }

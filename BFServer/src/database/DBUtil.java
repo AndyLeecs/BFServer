@@ -2,6 +2,7 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -14,12 +15,14 @@ import java.sql.Statement;
 
 public class DBUtil
 {
-	private static final String URL = "jdbc:mysql://localhost:3306/demo_jdbc";
+	private static final String URL = "jdbc:mysql://localhost:3306/mydb";
 	private static final String NAME = "root";
 	private static final String PASSWORD = "root";
 	
 	private static Connection conn = null;
-	
+
+	private static Statement stmt;
+	int insertValue=-1;
 	//加载驱动，连接数据库的静态代码段
 	static{
 		try{
@@ -28,7 +31,7 @@ public class DBUtil
 			//获得数据库的连接
 			conn = DriverManager.getConnection(URL, NAME, PASSWORD);
 			
-			
+			stmt = conn.createStatement();
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		} catch (SQLException e)
@@ -43,10 +46,19 @@ public class DBUtil
 		return conn;
 	}
 	
-	public static void main(String args[]) throws SQLException{
-		//通过数据库的连接操作数据库，实现增删改查
-		Statement stmt = conn.createStatement();
-		
+
+	public static ResultSet executeQuery(String queryString) throws SQLException
+	{
+		// TODO Auto-generated method stub
+        ResultSet rs=stmt.executeQuery(queryString);
+        return rs;
+
 		
 	}
+	
+    public int insert(String sql)throws Exception{
+        insertValue=stmt.executeUpdate(sql);
+        return insertValue;
+    }
+
 }
