@@ -18,9 +18,9 @@ public class TransformServiceImpl implements TransformService
 
 	private ExecuteService executor;
 	
-	private final String[] bf_words = new String[]{">","<","+","-",".",",","[","]"};
+	private final String[] bf_words = new String[]{">","<","[+]","[-]",".",",","[","]"};
 	//存该语言的单词
-	private String[] words = new String[]{">","<","+","-",".",",","[","]"};
+	private String[] words = new String[]{">","<","[+]","[-]",".",",","[","]"};
 	//该语言一个单词的长度
 	private int gap = 1;
 	
@@ -42,6 +42,9 @@ public class TransformServiceImpl implements TransformService
 	{
 		// TODO Auto-generated method stub
 		//判断是否合法,从长度
+		
+//		if(l.equals(Language.bf))
+//			return code;
 		if(code.length()%gap != 0)
 			return "Illegal input.";
 		String check = code;

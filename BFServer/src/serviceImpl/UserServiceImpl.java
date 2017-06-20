@@ -2,6 +2,7 @@ package serviceImpl;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,19 +17,44 @@ public class UserServiceImpl implements UserService{
 	public boolean login(String username, String password) throws RemoteException {
 		
 		boolean valid = false;
-		try{
-		BufferedReader br = new BufferedReader(new FileReader("D:\\BFServer\\git\\BFServer\\src\\files"+username+"//"+"password"));
-		if((br.readLine() != null)&&(password == br.readLine()))
-			valid = true;
-		br.close();
+		
+		// TODO Auto-generated catch block
+		File f = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+"password.txt");
+
+		System.out.println("create a file");
+		if(!f.exists()){
+		try
+		{
+			f.getParentFile().mkdirs();
+			f.createNewFile();
+			FileWriter fw = new FileWriter(f,false);
+			fw.write(password);
+			fw.flush();
+			fw.close();
+			return true;
+		} catch (IOException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		}
+		try
+		{
+			BufferedReader br = new BufferedReader(new FileReader("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+"password.txt"));
+			if((br.readLine() != null)&&(password == br.readLine()))
+				valid = true;
+			br.close();
+		} 
+
 			
-		}catch(IOException e){
+		catch(IOException e){
 			e.printStackTrace();
 			
 		}
 		
 		
 		return valid;
+
 	}
 
 	@Override
@@ -41,9 +67,15 @@ public class UserServiceImpl implements UserService{
 	public boolean register(String username, String password) throws RemoteException
 	{
 		// TODO Auto-generated method stub
-		File f = new File("D:\\BFServer\\git\\BFServer\\src\\files"+username+"//"+"password");
+		File f = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+"password.txt");
 		try
 		{
+			if(!f.exists())
+			{
+					f.getParentFile().mkdirs();
+					f.createNewFile();
+			}
+
 			FileWriter fw = new FileWriter(f,false);
 			fw.write(password);
 			fw.flush();
