@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**  
-* 类说明   
+* 数据库，未使用
 *  
 * @author Andy
 * @version  

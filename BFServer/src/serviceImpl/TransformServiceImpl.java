@@ -27,7 +27,7 @@ public class TransformServiceImpl implements TransformService
 	public TransformServiceImpl(Language l)
 	{
 		super();
-		if(l.equals(Language.ook)){
+		if((l!= null) && (l.equals(Language.ook))){
 			this.words = new String[]{"Ook. Ook?","Ook? Ook.","Ook. Ook.",
 					"Ook! Ook!","Ook! Ook.","Ook. Ook!","Ook! Ook?","Ook? Ook!"};
 			this.gap = 8;

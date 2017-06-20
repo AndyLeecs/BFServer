@@ -44,6 +44,7 @@ public class IOServiceImpl implements IOService{
 			e.printStackTrace();
 //			return false;
 		}
+		files = new File(fileName).listFiles();
 		String[] result;
 		if(files.length == MAX_STORE + 1){
 			files[0].delete();
