@@ -28,7 +28,7 @@ public class DataRemoteObject extends UnicastRemoteObject implements IOService, 
 		iOService = new IOServiceImpl();
 		userService = new UserServiceImpl();
 		executeService = new ExecuteServiceImpl();
-		transformService = new TransformServiceImpl(null);
+		transformService = new TransformServiceImpl();
 		
 	}
 
@@ -66,7 +66,7 @@ public class DataRemoteObject extends UnicastRemoteObject implements IOService, 
 	public String transform(String code, String param, Language l) throws RemoteException
 	{
 		// TODO Auto-generated method stub
-		return transformService.transform(code, param, l);
+		return executeService.execute(transformService.transform(code, param, l),param);
 	}
 
 	@Override
