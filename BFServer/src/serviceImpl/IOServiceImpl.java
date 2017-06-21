@@ -160,7 +160,7 @@ public class IOServiceImpl implements IOService{
 		String file = "";
 		String line = "";
 		try{
-			BufferedReader br = new BufferedReader(new FileReader("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+userId+"\\"+l+"\\"+fileName+ "." + l));
+			BufferedReader br = new BufferedReader(new FileReader("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+userId+"\\"+fileName));
 			while(((line = br.readLine()) != null) && (line.length() != 0))
 
 				file = file + line;
