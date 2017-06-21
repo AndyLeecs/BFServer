@@ -53,7 +53,7 @@ public class BFExecutionTest {
 		String code = ",>,,>++++++++[<------<------>>-]<<[>[>+>+<<-]>>[<<+>>-]<<<-]>>>++++++[<++++++++>-]<.";
 		assertEquals("8", executor.execute(code, "2*4"));
 	}
-
+	
 	
 }
 

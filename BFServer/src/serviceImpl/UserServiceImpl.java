@@ -17,32 +17,25 @@ public class UserServiceImpl implements UserService{
 	public boolean login(String username, String password) throws RemoteException {
 		
 		boolean valid = false;
-		
+		String line = "";
 		// TODO Auto-generated catch block
-		File f = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+"password.txt");
+//		File f = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+"password.txt");
 
 		System.out.println("create a file");
-		if(!f.exists()){
-		try
-		{
-			f.getParentFile().mkdirs();
-			f.createNewFile();
-			FileWriter fw = new FileWriter(f,false);
-			fw.write(password);
-			fw.flush();
-			fw.close();
-			return true;
-		} catch (IOException e1)
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		}
+		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+"password.txt").exists()){
+			System.out.println("file not found");
+			return false;
+		} 
+		
 		try
 		{
 			BufferedReader br = new BufferedReader(new FileReader("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+"password.txt"));
-			if((br.readLine() != null)&&(password == br.readLine()))
+			System.out.println(password);
+//		System.out.println(br.readLine());
+			if(((line = br.readLine()) != null)&&(password.equals(line))){
 				valid = true;
+				System.out.println("right password");
+			}
 			br.close();
 		} 
 
@@ -60,6 +53,9 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean logout(String username) throws RemoteException {
 		State.setUsername("");
+		//临时文件的保存不是登出就消失的
+//		File file = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username);
+//		file.deleteOnExit();
 		return true;
 	}
 
@@ -70,10 +66,12 @@ public class UserServiceImpl implements UserService{
 		File f = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+"password.txt");
 		try
 		{
-			if(!f.exists())
+			if(!new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username).exists())
 			{
-					f.getParentFile().mkdirs();
-					f.createNewFile();
+				new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username).mkdir();
+					//f.createNewFile();
+			}else{
+				return false;
 			}
 
 			FileWriter fw = new FileWriter(f,false);

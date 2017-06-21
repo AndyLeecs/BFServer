@@ -2,6 +2,7 @@ package rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 import runner.ServerRunner;
 import service.ExecuteService;
@@ -45,9 +46,9 @@ public class DataRemoteObject extends UnicastRemoteObject implements IOService, 
 	}
 
 	@Override
-	public String[] readFileList(String userId) throws RemoteException{
+	public ArrayList<String> readFileList(String userId, Language l) throws RemoteException{
 		// TODO Auto-generated method stub
-		return iOService.readFileList(userId);
+		return iOService.readFileList(userId,l);
 	}
 
 	@Override
