@@ -23,10 +23,10 @@ public class IOServiceImpl implements IOService{
 @Override
 	public String[] writeFile(String file, String userId, String fileName, Language l) throws RemoteException{
 		System.out.println(l.toString());
-		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId+"\\"+l).exists())
-			new File("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId+"\\"+l).mkdir();	
-		System.out.print("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId+"\\"+l + "\\" + fileName + "." + l.toString());
-		File f = new File("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId+"\\"+l, fileName + "." + l.toString());
+		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId).exists())
+			new File("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId).mkdir();	
+		System.out.print("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId + "\\" + fileName + "." + l.toString());
+		File f = new File("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId, fileName + "." + l.toString());
 
 		try {
 
@@ -59,8 +59,15 @@ public class IOServiceImpl implements IOService{
 //		else
 //			count = 0;
 		//一个临时的文件夹，文件夹名为文件名，存该文件的历史版本
-		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName).exists())
-			new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName).mkdir();	
+		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l).isDirectory()){
+			new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l).mkdir();
+			System.out.println("dir made");
+		}
+
+		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName).isDirectory()){
+			new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName).mkdir();
+			System.out.println("dir made");
+		}
 
 		int length = 0;
 		File[] files = new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName).listFiles();
@@ -92,6 +99,9 @@ public class IOServiceImpl implements IOService{
 //		return null;
 		//倒序
 		files = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+userId+"\\"+l + "\\" + fileName).listFiles();
+		if(files == null)
+			System.out.println("null");
+		if((files!= null) && (files.length>=2))
 		   Arrays.sort(files,new Comparator<File>(){  
 			     public int compare(File f1, File f2) { 
 			    	 System.out.println(f1.lastModified()+"");
@@ -183,15 +193,15 @@ public class IOServiceImpl implements IOService{
 //		
 //		return files;
 //	}
-		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+l).exists())
-			new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+l).mkdir();
-		File[] files = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username+"\\"+l).listFiles();
+		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username).exists())
+			new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username).mkdir();
+		File[] files = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username).listFiles();
 ArrayList<String> result = new ArrayList<String>();
 
 		
 		for(int i = 0; i < files.length ; i++){
 			if(files[i].isFile()&&(!files[i].getName().contains("password")))
-			result.add(getTime(files[i].lastModified())) ;
+			result.add(files[i].getName().replace("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username, "")) ;
 		}
 		
 		return result;
