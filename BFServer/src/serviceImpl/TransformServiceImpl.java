@@ -48,26 +48,51 @@ public class TransformServiceImpl implements TransformService
 		if((l!= null) && (l.equals(Language.ook))){
 			this.words = new String[]{"Ook. Ook?","Ook? Ook.","Ook. Ook.",
 					"Ook! Ook!","Ook! Ook.","Ook. Ook!","Ook! Ook?","Ook? Ook!"};
-			this.gap = 8;
+			this.gap = 10;
 		}
 
 		if(code.length()%gap != 0)
 			return "Illegal input.";
-		String check = code;
-		//转换
-		String bf_code = code;
+		String bf_code ="";
+		int length = code.length()/gap;
+			System.out.println(code.length()/gap+"");
+			for(int i = 0 ; i < length; i++){
+				System.out.println(i+"");
+				for(int j = 0 ; j < gap ; j++){
+					System.out.println(code.substring(0, gap)+i+j);
+					System.out.println("param:"+words[j]);
+				if(code.substring(0, gap).equals(words[j])){
+					code = code.substring(gap);
+					bf_code = bf_code+bf_words[j];
+					System.out.println("now the code is:"+code);
+					System.out.println(bf_code);
+					break;
+				}else if(code.equals(words[j])){
+					code = "";
+					bf_code = bf_code+bf_words[j];
+					System.out.println("now the code is:"+code);
+					System.out.println(bf_code);
+					break;
+
+				}
+				
+			
 		
 			
-			for(int i = 0 ; i < bf_words.length ; i++){
-			bf_code = bf_code.replace(words[i], bf_words[i]);
-			check = check.replace(words[i],"");
 			}
-		
+			}
+		System.out.println(code);
+		System.out.println(bf_code);
 		//判断是否合法，从内容
-			if(check.length()>0)
+			if(code.length()>0)
 				return "Illegal input.";
 		
 		System.out.println(bf_code+param);
+//		String result = executor.execute(bf_code,param);
+//		System.out.println(result);
+//		System.exit(0);
+//		return result;
+	
 //		String result = executor.execute(bf_code,param);
 //		System.out.println(result);
 //		System.exit(0);
