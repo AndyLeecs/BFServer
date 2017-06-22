@@ -2,6 +2,8 @@ package serviceImpl;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -69,36 +71,36 @@ public class IOServiceImpl implements IOService{
 			System.out.println("dir made");
 		}
 
-		int length = 0;
-		File[] files = new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName).listFiles();
-		
-		if(files == null || files.length == 0)
-			length = 0;
-		else
-			length = files.length;
-		System.out.println(length);
+//		int length = 0;
+//		File[] files = new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName).listFiles();
+//		D:\BFServer\git\BFServer\src\files\a\bf\cxy
+//		if(files == null || files.length == 0)
+//			length = 0;
+//		else
+//			length = files.length;
+//		System.out.println(length);
 //		if(!new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId + "\\" + fileName +"\\"+(length+1)+ "." + l.toString()).exists())
 //			new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId + "\\" + fileName +"\\"+(length+1)+ "." + l.toString()).mkdir();	
-		System.out.print("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName +"\\"+"version"+(length+1)+ "." + l.toString());
-		try {
-			File newfile = new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName,"version"+(length+1)+"." + l.toString());
+//		System.out.print("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName +"\\"+"version"+(length+1)+ "." + l.toString());
+		File newfile = new File("D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName,getTime() +"."+ l.toString());
+		
 
+		try
+		{
+			//newfile.createNewFile();
+//		copyFile("D:\\BFServer\\git\\BFServer\\src\\files"+ "\\"+userId + "\\" + fileName + "." + l.toString(),"D:\\BFServer\\git\\BFServer\\src\\files\\"+userId+"\\"+l + "\\" + fileName+"\\"+getTime() +"."+ l.toString());
 			FileWriter fw = new FileWriter(newfile, false);
 			fw.write(file);
 			fw.flush();
 			fw.close();
-//			FileWriter fw_list = new FileWriter((userId + "_" + "filelist"),true);
-//			fw_list.write(fileName+"@");
-//			fw_list.flush();
-//			fw_list.close();
-//			return true;
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-//			return false;
 		}
-//		return null;
+
 		//倒序
-		files = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+userId+"\\"+l + "\\" + fileName).listFiles();
+		File[] files = new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+userId+"\\"+l + "\\" + fileName).listFiles();
 		if(files == null)
 			System.out.println("null");
 		if((files!= null) && (files.length>=2))
@@ -128,14 +130,14 @@ public class IOServiceImpl implements IOService{
 				
 
 			
-			for(int i = MAX_STORE-1 ; i >=0 ; i--){
-				for(int j = 2 ; j < MAX_STORE+2; j++){
-					if(files[i].getName().equals("version"+j+"."+l)){
-						System.out.println(files[i].getName());
-						files[i].renameTo((new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+userId+"\\"+l + "\\" + fileName +"\\"+"version"+(j-1)+ "." + l)));
-					System.out.println(files[i].getName());
-					}}
-				}
+//			for(int i = MAX_STORE-1 ; i >=0 ; i--){
+//				for(int j = 2 ; j < MAX_STORE+2; j++){
+//					if(files[i].getName().equals("version"+j+"."+l)){
+//						System.out.println(files[i].getName());
+//						files[i].renameTo((new File("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+userId+"\\"+l + "\\" + fileName +"\\"+"version"+(j-1)+ "." + l)));
+//					System.out.println(files[i].getName());
+//					}}
+//				}
 			
 //			for(int i = 0; i < MAX_STORE-1 ; i++)
 //				files[i] = files[i+1];
@@ -145,7 +147,7 @@ public class IOServiceImpl implements IOService{
 		
 		for(int i = 0 ; (i < MAX_STORE)&&(result.length>i)&&(i < files.length); i++){
 			
-				result[i] = "version"+(i+1);
+				result[i] = getTime(files[i].lastModified());
 			System.out.print(result[i]);
 		}
 			return result;
@@ -202,19 +204,45 @@ ArrayList<String> result = new ArrayList<String>();
 		for(int i = 0; i < files.length ; i++){
 			if(files[i].isFile()&&(!files[i].getName().contains("password")))
 			result.add(files[i].getName().replace("D:\\BFServer\\git\\BFServer\\src\\files"+"\\"+username, "")) ;
+			
 		}
 		
 		return result;
 			
 		
 	}
-	public String getTime(long time){
-	 DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public String getTime(){
+	 DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 	  Calendar date = Calendar.getInstance();
-	  date.setTimeInMillis(time);//System.currentTimeMillis()替换成long lastModified
+	  date.setTimeInMillis(System.currentTimeMillis());//System.currentTimeMillis()替换成long lastModified
 	  return df.format(date.getTime());
 	  
 	  
 	}
-	
+
+	public String getTime(long time){
+		 DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+		  Calendar date = Calendar.getInstance();
+		  date.setTimeInMillis(time);//System.currentTimeMillis()替换成long lastModified
+		  return df.format(date.getTime());
+		  
+		  
+		}
+    public void copyFile(String src,String dest) throws IOException{
+        FileInputStream in=new FileInputStream(src);
+        File file=new File(dest);
+        if(!file.exists())
+            file.createNewFile();
+        FileOutputStream out=new FileOutputStream(file);
+        int c;
+        byte buffer[]=new byte[1024];
+        while((c=in.read(buffer))!=-1){
+            for(int i=0;i<c;i++)
+                out.write(buffer[i]);        
+        }
+        in.close();
+        out.close();
+    }
+
+
 }
