@@ -16,7 +16,7 @@ import service.TransformService;
 public class TransformServiceImpl implements TransformService
 {
 
-	private ExecuteServiceImpl executor;
+
 	
 	private final String[] bf_words = new String[]{">","<","+","-",".",",","[","]"};
 	//存该语言的单词
@@ -52,7 +52,7 @@ public class TransformServiceImpl implements TransformService
 		}
 
 		if(code.length()%gap != 0)
-			return "Illegal input.";
+			return "Error:Illegal input.";
 		String bf_code ="";
 		int length = code.length()/gap;
 			System.out.println(code.length()/gap+"");
@@ -85,7 +85,7 @@ public class TransformServiceImpl implements TransformService
 		System.out.println(bf_code);
 		//判断是否合法，从内容
 			if(code.length()>0)
-				return "Illegal input.";
+				return "Error:Illegal input.";
 		
 		System.out.println(bf_code+param);
 //		String result = executor.execute(bf_code,param);

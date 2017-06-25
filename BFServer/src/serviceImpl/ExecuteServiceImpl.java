@@ -35,7 +35,22 @@ public class ExecuteServiceImpl implements ExecuteService {
 		
 		if((code != null) && (code.length() != 0)){
 			codelist = code.toCharArray();
-			
+			for (int i = 0; i < code.length(); i++) {
+				if (code.charAt(i) == '[') {
+					count++;
+				}
+				if (code.charAt(i) == ']') {
+					count--;
+				}
+			}
+			if (count < 0) {
+				s = "Error:'[' is missing";
+				return s;
+			}
+			if (count > 0) {
+				s = "Error:']' is missing";
+				return s;
+			}
 			
 			for(int i = 0 ; i < codelist.length ; i++){
 				
@@ -55,7 +70,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 						
 					}
 				catch(IndexOutOfBoundsException e){
-					s = "IndexOutOfBoundsExceptionAt'+': "+ptr;
+					s = "Error:IndexOutOfBoundsExceptionAt'+': "+ptr;
 					return s;
 
 				}
@@ -65,7 +80,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 						list[ptr]--;
 					}
 					catch(IndexOutOfBoundsException e){
-						s = "IndexOutOfBoundsExceptionAt'-': "+ptr;
+						s = "Error:IndexOutOfBoundsExceptionAt'-': "+ptr;
 						return s;
 					}
 
@@ -78,7 +93,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 
 					}
 					catch(IndexOutOfBoundsException e){
-						s = "IndexOutOfBoundsExceptionAtInput: "+input_ptr;
+						s = "Error:IndexOutOfBoundsExceptionAtInput: "+input_ptr;
 						return s;
 					}
 					
@@ -86,7 +101,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 						list[ptr] = param.charAt(input_ptr);
 						++input_ptr;
 					}catch(IndexOutOfBoundsException e){
-						s = "IndexOutOfBoundsExceptionAt',': "+ptr;
+						s = "Error:IndexOutOfBoundsExceptionAt',': "+ptr;
 						return s;
 
 					}
@@ -96,7 +111,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 					s = s + list[ptr];
 					}
 					catch(IndexOutOfBoundsException e){
-						s = "IndexOutOfBoundsExceptionAt'.': "+ptr;
+						s = "Error:IndexOutOfBoundsExceptionAt'.': "+ptr;
 						return s;
 					}
 
@@ -116,7 +131,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 								break;
 						}
 							if(j == codelist.length - 1){
-								s = "']'missing.";
+								s = "Error:']'missing.";
 							return s;
 							}
 						
@@ -124,7 +139,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 					}
 					}
 					catch(IndexOutOfBoundsException e){
-						s = "IndexOutOfBoundsException: "+ptr;
+						s = "Error:IndexOutOfBoundsException: "+ptr;
 						return s;
 					}
 
@@ -144,7 +159,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 								break;
 						}
 							if(j == 0){
-								s = "'['missing.";
+								s = "Error:'['missing.";
 							return s;
 							}
 						
@@ -152,13 +167,13 @@ public class ExecuteServiceImpl implements ExecuteService {
 					}
 					}
 					catch(IndexOutOfBoundsException e){
-						s = "IndexOutOfBoundsException: "+ptr;
+						s = "Error:IndexOutOfBoundsException: "+ptr;
 						return s;
 					}
 
 					break;
 				default:
-					s = "Contains illegal characters.";
+					s = "Error:Contains illegal characters.";
 					return s;
 					
 					
