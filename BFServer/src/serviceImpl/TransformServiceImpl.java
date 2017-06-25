@@ -43,11 +43,11 @@ public class TransformServiceImpl implements TransformService
 		// TODO Auto-generated method stub
 		//判断是否合法,从长度
 		
-//		if(l.equals(Language.bf))
-//			return code;
+		if(l.equals(Language.bf))
+			return code;
 		if((l!= null) && (l.equals(Language.ook))){
-			this.words = new String[]{"Ook. Ook?","Ook? Ook.","Ook. Ook.",
-					"Ook! Ook!","Ook! Ook.","Ook. Ook!","Ook! Ook?","Ook? Ook!"};
+			this.words = new String[]{"Ook. Ook? ","Ook? Ook. ","Ook. Ook. ",
+					"Ook! Ook! ","Ook! Ook. ","Ook. Ook! ","Ook! Ook? ","Ook? Ook! "};
 			this.gap = 10;
 		}
 
