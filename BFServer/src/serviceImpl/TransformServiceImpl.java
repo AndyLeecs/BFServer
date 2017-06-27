@@ -42,6 +42,9 @@ public class TransformServiceImpl implements TransformService
 	public String transform(String code, String param, Language l) throws RemoteException
 	{
 		// TODO Auto-generated method stub
+		// 去除换行符
+		code = code.replaceAll("\r|\n", "");
+		param = param.replaceAll("\r|\n", "");
 		// 判断是否合法,从长度
 
 		if (l.equals(Language.bf))
