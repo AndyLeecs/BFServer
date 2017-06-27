@@ -1,26 +1,31 @@
 package serviceImpl;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Vector;
 
-/**  
-* 存储现在程序的情况
-*  
-* @author Andy
-* @version  
-*/
+/**
+ * 存储现在程序的情况
+ * 
+ * @author qwe
+ * 
+ */
 
 public class State
 {
+	/**
+	 * 用户名
+	 */
 	private static String username;
 
+	/**
+	 * 该文件夹下所有的文件(夹)名
+	 */
+	private static File[] files = new File(username).listFiles();
 
-	private static File[] files = new File(username).listFiles();//获取该文件夹下所有的文件(夹)名
-	
+	public static File[] getFiles()
+	{
+		return files;
+	}
+
 	public static String getUsername()
 	{
 		return username;
@@ -31,13 +36,8 @@ public class State
 		State.username = username;
 	}
 
-	public static File[] getFiles()
+	public static void setFiles(File[] files)
 	{
-		return files;
-	}
-
-	public void setFiles(File[] files)
-	{
-		this.files = files;
+		State.files = files;
 	}
 }
