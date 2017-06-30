@@ -125,6 +125,31 @@ public class IOServiceImpl implements IOService
 		// 临时文件夹的大小
 		int version = new File("D:\\BFServer\\git\\BFServer\\src\\temp").listFiles().length;
 		System.out.println("version is" + version);
+		
+//		//确认本次和上次存的内容不同
+//		if(version>0){
+//		String file = "";
+//		String line = "";
+//		try
+//		{
+//			BufferedReader br = new BufferedReader(
+//					new FileReader("D:\\BFServer\\git\\BFServer\\src\\temp\\" + (version -1) + ".txt"));
+//			while (((line = br.readLine()) != null) && (line.length() != 0))
+//
+//				file +=line;
+//			br.close();
+//			
+//
+//		} catch (IOException e)
+//		{
+//			e.printStackTrace();
+//			
+//		}
+//		
+//		if(file.equals(code))
+//			return version-1;
+//		}
+
 		File f = new File("D:\\BFServer\\git\\BFServer\\src\\temp", (version) + ".txt");
 
 		try
