@@ -96,7 +96,8 @@ public class IOServiceImpl implements IOService
 			new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username).mkdir();
 		File[] files = new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username).listFiles();
 		ArrayList<String> result = new ArrayList<String>();
-
+		
+		if(files != null)
 		for (int i = 0; i < files.length; i++)
 		{
 			if (files[i].isFile() && (!files[i].getName().contains("password"))
