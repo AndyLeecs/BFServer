@@ -2,7 +2,6 @@ package serviceImpl;
 
 import java.io.BufferedReader;
 import java.io.File;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class IOServiceImpl implements IOService
 		DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 		Calendar date = Calendar.getInstance();
 		date.setTimeInMillis(System.currentTimeMillis());
-															// lastModified
+		// lastModified
 		return df.format(date.getTime());
 
 	}
@@ -100,12 +99,123 @@ public class IOServiceImpl implements IOService
 
 		for (int i = 0; i < files.length; i++)
 		{
-			if (files[i].isFile() && (!files[i].getName().contains("password")))
+			if (files[i].isFile() && (!files[i].getName().contains("password"))
+					&& (!files[i].getName().contains("login")))
 				result.add(files[i].getName().replace("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username, ""));
 
 		}
 
 		return result;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#writeTemp(java.lang.String)
+	 */
+	@Override
+	public int writeTemp(String code) throws RemoteException
+	{
+		System.out.println("start to write temp");
+		// 如果临时文件夹不存在，创建
+		if (!new File("D:\\BFServer\\git\\BFServer\\src\\temp").exists())
+			new File("D:\\BFServer\\git\\BFServer\\src\\temp").mkdirs();
+		// 临时文件夹的大小
+		int version = new File("D:\\BFServer\\git\\BFServer\\src\\temp").listFiles().length;
+		System.out.println("version is" + version);
+		File f = new File("D:\\BFServer\\git\\BFServer\\src\\temp", (version) + ".txt");
+
+		try
+		{
+
+			FileWriter fw = new FileWriter(f, false);
+			fw.write(code);
+			fw.flush();
+			fw.close();
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			// return false;
+		}
+		return version;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#readTempBack(int)
+	 */
+	@Override
+	public String readTempBack(int version)
+	{
+		String file = "";
+		String line = "";
+		try
+		{
+			BufferedReader br = new BufferedReader(
+					new FileReader("D:\\BFServer\\git\\BFServer\\src\\temp\\" + (version + 1) + ".txt"));
+			while (((line = br.readLine()) != null) && (line.length() != 0))
+
+				file = file + line;
+			br.close();
+			return file;
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			return "";
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#readTempForward(int)
+	 */
+	@Override
+	public String readTempForward(int version)
+	{
+		String file = "";
+		String line = "";
+		try
+		{
+			BufferedReader br = new BufferedReader(
+					new FileReader("D:\\BFServer\\git\\BFServer\\src\\temp\\" + (version - 1) + ".txt"));
+			while (((line = br.readLine()) != null) && (line.length() != 0))
+
+				file = file + line;
+			br.close();
+			return file;
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			return "";
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#clearTemp()
+	 */
+	@Override
+	public void clearTemp() throws RemoteException
+	{
+		// 获得文件夹下的所有文件
+		File[] tempFiles = new File("D:\\BFServer\\git\\BFServer\\src\\temp").listFiles();
+		// 逐个删除文件
+		if ((tempFiles != null) && (tempFiles.length != 0))
+			for (int i = 0; i < tempFiles.length; i++)
+			{
+				System.out.println(tempFiles[i].getName());
+				tempFiles[i].delete();
+			}
 
 	}
 

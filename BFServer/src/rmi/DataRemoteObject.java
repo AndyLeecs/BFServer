@@ -91,4 +91,53 @@ public class DataRemoteObject extends UnicastRemoteObject
 		return iOService.writeFile(file, userId, fileName, l);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#writeTemp(java.lang.String)
+	 */
+	@Override
+	public int writeTemp(String code) throws RemoteException
+	{
+		// TODO Auto-generated method stub
+		return iOService.writeTemp(code);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#readTempBack(int)
+	 */
+	@Override
+	public String readTempBack(int version) throws RemoteException
+	{
+		// TODO Auto-generated method stub
+		return iOService.readTempBack(version);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#readTempForward(int)
+	 */
+	@Override
+	public String readTempForward(int version) throws RemoteException
+	{
+		// TODO Auto-generated method stub
+		return iOService.readTempForward(version);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#clearTemp()
+	 */
+	@Override
+	public void clearTemp() throws RemoteException
+	{
+		// TODO Auto-generated method stub
+		iOService.clearTemp();
+
+	}
+
 }

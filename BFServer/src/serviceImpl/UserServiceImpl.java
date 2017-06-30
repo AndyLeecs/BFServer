@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService
 		// TODO Auto-generated catch block
 		System.out.println("create a file");
 
+		if (new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username + "\\" + "login.txt").exists())
+			return false;
 		// 用户名不存在
 		if (!new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username + "\\" + "password.txt").exists())
 		{
@@ -39,7 +41,7 @@ public class UserServiceImpl implements UserService
 			return false;
 		}
 
-		// 用户名存在，查看代码是否正确
+		// 用户名存在，查看密码是否正确
 		try
 		{
 			BufferedReader br = new BufferedReader(new FileReader(
@@ -52,9 +54,23 @@ public class UserServiceImpl implements UserService
 				System.out.println("right password");
 			}
 			br.close();
-		}
 
-		catch (IOException e)
+			// 写入已登录的状态
+
+			File f = new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username, "login.txt");
+
+			if (!new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username).exists())
+			{
+				new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username).mkdir();
+				// f.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(f, false);
+			fw.write("");
+			fw.flush();
+			fw.close();
+
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 
@@ -72,6 +88,8 @@ public class UserServiceImpl implements UserService
 	@Override
 	public boolean logout(String username) throws RemoteException
 	{
+		File file = new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username + "\\login.txt");
+		file.delete();
 		State.setUsername("");
 
 		return true;

@@ -1,7 +1,5 @@
 package serviceImpl;
 
-import java.io.File;
-
 /**
  * 存储现在程序的情况
  * 
@@ -16,15 +14,15 @@ public class State
 	 */
 	private static String username;
 
-	/**
-	 * 该文件夹下所有的文件(夹)名
-	 */
-	private static File[] files = new File(username).listFiles();
+	// /**
+	// * 该文件夹下所有的文件(夹)名
+	// */
+	// private static File[] files = new File(username).listFiles();
 
-	public static File[] getFiles()
-	{
-		return files;
-	}
+	// public static File[] getFiles()
+	// {
+	// return files;
+	// }
 
 	public static String getUsername()
 	{
@@ -36,8 +34,10 @@ public class State
 		State.username = username;
 	}
 
-	public static void setFiles(File[] files)
-	{
-		State.files = files;
-	}
+	// public static void setFiles(File[] files)
+	// {
+	// State.files = files;
+	// }
+	//
+
 }
