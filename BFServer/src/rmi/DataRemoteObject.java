@@ -140,4 +140,16 @@ public class DataRemoteObject extends UnicastRemoteObject
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see service.IOService#check(java.lang.String)
+	 */
+	@Override
+	public boolean check(String code) throws RemoteException
+	{
+		// TODO Auto-generated method stub
+		return iOService.check(code);
+	}
+
 }

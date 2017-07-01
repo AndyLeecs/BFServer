@@ -80,4 +80,12 @@ public interface IOService extends Remote
 	 */
 	public void clearTemp() throws RemoteException;
 
+	/**
+	 * @param code
+	 *            当前代码
+	 * @return 是否能够写入新代码
+	 * @throws RemoteException
+	 */
+	boolean check(String code) throws RemoteException;
+
 }

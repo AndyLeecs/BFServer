@@ -96,17 +96,50 @@ public class IOServiceImpl implements IOService
 			new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username).mkdir();
 		File[] files = new File("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username).listFiles();
 		ArrayList<String> result = new ArrayList<String>();
-		
-		if(files != null)
-		for (int i = 0; i < files.length; i++)
+
+		if (files != null)
+			for (int i = 0; i < files.length; i++)
+			{
+				if (files[i].isFile() && (!files[i].getName().contains("password"))
+						&& (!files[i].getName().contains("login")))
+					result.add(files[i].getName().replace("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username,
+							""));
+
+			}
+
+		return result;
+
+	}
+
+	@Override
+	public boolean check(String code) throws RemoteException
+	{
+		String file = "";
+		String line = "";
+		try
 		{
-			if (files[i].isFile() && (!files[i].getName().contains("password"))
-					&& (!files[i].getName().contains("login")))
-				result.add(files[i].getName().replace("D:\\BFServer\\git\\BFServer\\src\\files" + "\\" + username, ""));
+			// 临时文件夹的大小
+			int version = new File("D:\\BFServer\\git\\BFServer\\src\\temp").listFiles().length;
+			if (version > 0)
+			{
+				BufferedReader br = new BufferedReader(
+						new FileReader("D:\\BFServer\\git\\BFServer\\src\\temp\\" + (version - 1) + ".txt"));
+				while (((line = br.readLine()) != null) && (line.length() != 0))
+
+					file = file + line;
+				br.close();
+
+			}
+		} catch (IOException e)
+		{
+			e.printStackTrace();
 
 		}
 
-		return result;
+		if (file.equals(code))
+			return false;
+		else
+			return true;
 
 	}
 
@@ -125,30 +158,31 @@ public class IOServiceImpl implements IOService
 		// 临时文件夹的大小
 		int version = new File("D:\\BFServer\\git\\BFServer\\src\\temp").listFiles().length;
 		System.out.println("version is" + version);
-		
-//		//确认本次和上次存的内容不同
-//		if(version>0){
-//		String file = "";
-//		String line = "";
-//		try
-//		{
-//			BufferedReader br = new BufferedReader(
-//					new FileReader("D:\\BFServer\\git\\BFServer\\src\\temp\\" + (version -1) + ".txt"));
-//			while (((line = br.readLine()) != null) && (line.length() != 0))
-//
-//				file +=line;
-//			br.close();
-//			
-//
-//		} catch (IOException e)
-//		{
-//			e.printStackTrace();
-//			
-//		}
-//		
-//		if(file.equals(code))
-//			return version-1;
-//		}
+
+		// //确认本次和上次存的内容不同
+		// if(version>0){
+		// String file = "";
+		// String line = "";
+		// try
+		// {
+		// BufferedReader br = new BufferedReader(
+		// new FileReader("D:\\BFServer\\git\\BFServer\\src\\temp\\" + (version
+		// -1) + ".txt"));
+		// while (((line = br.readLine()) != null) && (line.length() != 0))
+		//
+		// file +=line;
+		// br.close();
+		//
+		//
+		// } catch (IOException e)
+		// {
+		// e.printStackTrace();
+		//
+		// }
+		//
+		// if(file.equals(code))
+		// return version-1;
+		// }
 
 		File f = new File("D:\\BFServer\\git\\BFServer\\src\\temp", (version) + ".txt");
 
